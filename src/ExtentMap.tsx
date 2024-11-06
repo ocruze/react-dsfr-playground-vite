@@ -1,10 +1,11 @@
 // import { LayerSwitcher } from "geopf-extensions-openlayers"; // erreur : Cannot find module geopf-extensions-openlayers or its corresponding type declarations
 // import { LayerSwitcher } from "geopf-extensions-openlayers/src";
+import Catalog from "geopf-extensions-openlayers/src/packages/Controls/Catalog/Catalog";
+import GeoportalFullScreen from "geopf-extensions-openlayers/src/packages/Controls/FullScreen/GeoportalFullScreen";
 import LayerSwitcher from "geopf-extensions-openlayers/src/packages/Controls/LayerSwitcher/LayerSwitcher";
 import SearchEngine from "geopf-extensions-openlayers/src/packages/Controls/SearchEngine/SearchEngine";
 import GeoportalZoom from "geopf-extensions-openlayers/src/packages/Controls/Zoom/GeoportalZoom";
-import GeoportalFullScreen from "geopf-extensions-openlayers/src/packages/Controls/FullScreen/GeoportalFullScreen";
-import Catalog from "geopf-extensions-openlayers/src/packages/Controls/Catalog/Catalog";
+import Gp from "geoportal-access-lib";
 import { Feature, View } from "ol";
 import Map from "ol/Map";
 import { ScaleLine } from "ol/control";
@@ -23,11 +24,6 @@ import useCapabilities from "./hooks/useCapabilities";
 
 import "ol/ol.css";
 
-// NOTE : normalement pas besoin d'importer le css dsfr ici car il est déjà importé
-// j'ai essayé de l'importer ici mais ça ne change rien, que ce soit le css venant de @codegouvfr/react-dsfr/dsfr ou de @gouvfr/dsfr
-// import "@codegouvfr/react-dsfr/dsfr/dsfr.main.min.css";
-// import "@gouvfr/dsfr/dist/dsfr.css";
-// import "@gouvfr/dsfr/dist/utility/icons/icons.css";
 import "geopf-extensions-openlayers/css/Dsfr.css";
 
 import "./styles/map-view.scss";
@@ -37,6 +33,19 @@ const ExtentMap: FC = () => {
     const mapRef = useRef<Map>();
 
     const { data: capabilities } = useCapabilities();
+
+    useEffect(() => {
+        const cfg = new Gp.Services.Config({
+            customConfigFile: "https://raw.githubusercontent.com/IGNF/geoportal-configuration/new-url/dist/fullConfig.json",
+            onSuccess: () => {
+                console.log("gp config loaded!");
+            },
+            onFailure: (e) => {
+                console.error(e);
+            },
+        });
+        cfg.call();
+    }, []);
 
     const extentLayer = useMemo(() => {
         const extentFeatures = new GeoJSON({
@@ -133,7 +142,7 @@ const ExtentMap: FC = () => {
                     "https://raw.githubusercontent.com/IGNF/cartes.gouv.fr-entree-carto/main/public/data/edito.json",
                 ],
             },
-            position: "top-right",
+            position: "top-left",
         });
 
         const controls = [
