@@ -43,6 +43,14 @@ function App() {
                         linkProps: routes.map().link,
                     },
                     {
+                        text: "Test TinyMCE",
+                        linkProps: routes.test_tinymceditor().link,
+                    },
+                    {
+                        text: "Test Tiptap Editor",
+                        linkProps: routes.test_tiptap_editor().link,
+                    },
+                    {
                         text: "Données personnelles",
                         linkProps: routes.personal_data().link,
                     },
