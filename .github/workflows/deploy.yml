@@ -23,6 +23,7 @@ jobs:
             - name: Build application
               run: |
                   yarn install --frozen-lockfile
+                  yarn prebuild
                   yarn vite build --base=/react-dsfr-playground-vite/
 
             - name: Deploy 🚀
