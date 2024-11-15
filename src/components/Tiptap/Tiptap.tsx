@@ -5,6 +5,7 @@ import ListItem from "@tiptap/extension-list-item";
 import TextStyle from "@tiptap/extension-text-style";
 import { EditorProvider, useCurrentEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import { useEffect, useState } from "react";
 
 const MenuBar = () => {
     const { editor } = useCurrentEditor();
@@ -164,7 +165,7 @@ const extensions = [
     }),
 ];
 
-const content = `
+const initialContent = `
 <h2>
   Hi there,
 </h2>
@@ -196,7 +197,22 @@ const content = `
 `;
 
 const Tiptap = () => {
-    return <EditorProvider slotBefore={<MenuBar />} extensions={extensions} content={content}></EditorProvider>;
+    const [content, setContent] = useState(initialContent);
+
+    useEffect(() => {
+        console.log(content);
+    }, [content]);
+
+    return (
+        <EditorProvider
+            slotBefore={<MenuBar />}
+            extensions={extensions}
+            content={content}
+            onUpdate={(props) => {
+                setContent(props.editor.getHTML());
+            }}
+        ></EditorProvider>
+    );
 };
 
 export default Tiptap;
