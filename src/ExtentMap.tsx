@@ -27,10 +27,14 @@ import "ol/ol.css";
 import "geopf-extensions-openlayers/css/Dsfr.css";
 
 import "./styles/map-view.scss";
+import { fr } from "@codegouvfr/react-dsfr";
+import { cx } from "@codegouvfr/react-dsfr/tools/cx";
 
 const ExtentMap: FC = () => {
     const mapTargetRef = useRef<HTMLDivElement>(null);
     const mapRef = useRef<Map>();
+
+    const catalogTargetRef = useRef<HTMLDivElement>(null);
 
     const { data: capabilities } = useCapabilities();
 
@@ -104,7 +108,8 @@ const ExtentMap: FC = () => {
         });
 
         const catalog = new Catalog({
-            collapsed: true,
+            target: "catalog",
+            collapsed: false,
             draggable: false,
             titlePrimary: "",
             titleSecondary: "Gérer vos couches de données",
@@ -179,24 +184,9 @@ const ExtentMap: FC = () => {
     }, [bgLayer, extentLayer]);
 
     return (
-        <div
-            id="map-and-tools-container"
-            style={{
-                marginLeft: 0,
-                width: "inherit",
-                height: "70vh",
-                display: "flex",
-            }}
-        >
-            <div
-                ref={mapTargetRef}
-                // style={{
-                //     width: "100%",
-                //     position: "relative",
-                //     height: "inherit",
-                // }}
-                className="map-view"
-            />
+        <div className={fr.cx("fr-grid-row")}>
+            <div className={fr.cx("fr-col-5")} id={"catalog"}></div>
+            <div className={cx(fr.cx("fr-col-7"), "map-view")} ref={mapTargetRef}></div>
         </div>
     );
 };
