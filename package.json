@@ -24,7 +24,7 @@
     "@tiptap/pm": "^2.9.1",
     "@tiptap/react": "^2.9.1",
     "@tiptap/starter-kit": "^2.9.1",
-    "geopf-extensions-openlayers": "./src/lib/geopf-extensions-openlayers-1.0.0-beta.0-241.tgz",
+    "geopf-extensions-openlayers": "./src/lib/geopf-extensions-openlayers-1.0.0-beta.0-265.tgz",
     "ol": "8.2.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
