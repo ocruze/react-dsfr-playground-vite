@@ -1,5 +1,6 @@
 import { fr } from "@codegouvfr/react-dsfr";
 import { ButtonsGroup } from "@codegouvfr/react-dsfr/ButtonsGroup";
+import { type Level } from "@tiptap/extension-heading";
 import { Color } from "@tiptap/extension-color";
 import Image from "@tiptap/extension-image";
 import Link from "@tiptap/extension-link";
@@ -7,7 +8,54 @@ import ListItem from "@tiptap/extension-list-item";
 import TextStyle from "@tiptap/extension-text-style";
 import { EditorProvider, useCurrentEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { AddLinkDialogModal, AddLinkDialog, LinkFormType } from "../../assets/tiptap/LinkDialog";
+
+/* type CustomLinkProps = {
+    href: string;
+    value: string;
+};
+
+export const CustomLink = Link.extend({
+    addCommands() {
+        return {
+            ...this.parent?.(),
+            addLink: function (options: CustomLinkProps) {
+                return ({ commands }) => {
+                    commands.insertContent(`<a href="${options.href}">${options.value}</a>`, {
+                        parseOptions: {
+                            preserveWhitespace: false,
+                        },
+                    });
+                };
+            },
+        };
+    },
+});
+ */
+
+/*const HeadingMenu: FC = () => {
+    return (
+        <div className={fr.cx("fr-grid-row")}>
+            <Select
+                label="Entêtes"
+                nativeSelectProps={{
+                    onChange: (event) => console.log(event.target.value),
+                }}
+            >
+                {["", "1", "2", "3", "4", "5", "6"].map((h) => {
+                    if (h === "")
+                        return (
+                            <option value="" disabled hidden>
+                                Selectionnez une option
+                            </option>
+                        );
+                    return <option value={`h${h}`}>{`Heading H${h}`}</option>;
+                })}
+            </Select>
+        </div>
+    );
+}; */
 
 const MenuBar = () => {
     const { editor } = useCurrentEditor();
@@ -19,15 +67,22 @@ const MenuBar = () => {
         }
     }, [editor]);
 
-    const addLink = useCallback(() => {
-        const url = window.prompt("URL");
-        if (url) {
-            editor?.chain().focus().extendMarkRange("link").setLink({ href: url, target: "_blank" }).run();
-        }
+    const headingButtons = useMemo(() => {
+        const buttons = [2, 3, 4, 5, 6].map((l) => {
+            const level = l as Level;
+            return {
+                onClick: () => editor?.chain().focus().toggleHeading({ level }).run(),
+                priority: editor?.isActive("heading", { level }) ? "secondary" : "tertiary no outline",
+                title: `Titre ${l}`,
+                iconId: `ri-h-${l}`,
+            };
+        });
+        return buttons;
     }, [editor]);
 
     return (
         <div>
+            {/* <HeadingMenu /> */}
             <div className={fr.cx("fr-grid-row")}>
                 <ButtonsGroup
                     buttons={[
@@ -82,19 +137,7 @@ const MenuBar = () => {
                 {/* <Button onClick={() => editor?.chain().focus().unsetAllMarks().run()}>Clear marks</Button>
             <Button onClick={() => editor?.chain().focus().clearNodes().run()}>Clear nodes</Button> */}
 
-                <ButtonsGroup
-                    buttons={([1, 2, 3, 4, 5, 6] as const).map((level) => ({
-                        onClick: () => editor?.chain().focus().toggleHeading({ level }).run(),
-                        priority: editor?.isActive("heading", { level }) ? "secondary" : "tertiary no outline",
-                        title: `Titre ${level}`,
-                        iconId: `ri-h-${level}`,
-                        // ri-h-1, ri-h-2, ri-h-3, ri-h-4, ri-h-5, ri-h-6
-                    }))}
-                    buttonsEquisized
-                    inlineLayoutWhen="always"
-                    buttonsSize="small"
-                />
-
+                <ButtonsGroup buttons={headingButtons} buttonsEquisized inlineLayoutWhen="always" buttonsSize="small" />
                 <ButtonsGroup
                     buttons={[
                         {
@@ -163,7 +206,7 @@ const MenuBar = () => {
                     buttons={[
                         {
                             iconId: "ri-links-line",
-                            onClick: () => addLink(),
+                            onClick: () => AddLinkDialogModal.open(),
                             priority: "tertiary no outline",
                             title: "Insérer un lien",
                         },
@@ -193,6 +236,7 @@ const MenuBar = () => {
                     inlineLayoutWhen="always"
                 />
             </div>
+            <AddLinkDialog editor={editor} />
         </div>
     );
 };
@@ -200,8 +244,10 @@ const MenuBar = () => {
 const extensions = [
     Color.configure({ types: [TextStyle.name, ListItem.name] }),
     Image.configure(),
-    Link.configure({ protocols: ["mailto"] }),
-    TextStyle.configure({ types: [ListItem.name] }),
+    Link,
+    //Link.configure({ protocols: ["mailto"] }),
+    // CustomLink,
+    //TextStyle.configure({ types: [ListItem.name] }),
     StarterKit.configure({
         bulletList: {
             keepMarks: true,
@@ -253,14 +299,16 @@ const Tiptap = () => {
     }, [content]);
 
     return (
-        <EditorProvider
-            slotBefore={<MenuBar />}
-            extensions={extensions}
-            content={content}
-            onUpdate={(props) => {
-                setContent(props.editor.getHTML());
-            }}
-        ></EditorProvider>
+        <>
+            <EditorProvider
+                slotBefore={<MenuBar />}
+                extensions={extensions}
+                content={content}
+                onUpdate={(props) => {
+                    setContent(props.editor.getHTML());
+                }}
+            ></EditorProvider>
+        </>
     );
 };
 
