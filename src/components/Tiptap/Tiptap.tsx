@@ -9,7 +9,7 @@ import TextStyle from "@tiptap/extension-text-style";
 import { EditorProvider, useCurrentEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { AddLinkDialogModal, AddLinkDialog, LinkFormType } from "../../assets/tiptap/LinkDialog";
+import { AddLinkDialogModal, AddLinkDialog, LinkFormType } from "../RichTextEditor/dialogs/LinkDialog";
 
 /* type CustomLinkProps = {
     href: string;
