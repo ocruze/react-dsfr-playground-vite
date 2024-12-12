@@ -203,7 +203,7 @@ function RichTextEditor(props: IRichTextEditorProps) {
 
     return (
         <RichTextEditor.Provider {...props} extensions={Object.values(extensions)}>
-            <RichTextEditor.Menu>
+            <RichTextEditor.Menu first>
                 {features
                     .map((list) => list.filter((item) => RichTextEditor[item]))
                     .filter((list) => list.length > 0)

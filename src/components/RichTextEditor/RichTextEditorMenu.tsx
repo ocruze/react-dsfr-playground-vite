@@ -4,13 +4,15 @@ import { tss } from "tss-react";
 
 interface IRichTextEditorMenuProps {
     children: ReactNode;
+    first?: boolean;
+    last?: boolean;
 }
 
 function RichTextEditorMenu(props: IRichTextEditorMenuProps) {
-    const { children } = props;
-    const { classes } = useStyles();
+    const { children, first, last } = props;
+    const { classes, cx } = useStyles();
 
-    return <ul className={classes.root}>{children}</ul>;
+    return <ul className={cx(classes.root, { [classes.first]: first, [classes.last]: last })}>{children}</ul>;
 }
 
 const useStyles = tss.withName(RichTextEditorMenu.name).create(() => ({
@@ -25,15 +27,15 @@ const useStyles = tss.withName(RichTextEditorMenu.name).create(() => ({
         backgroundImage: "linear-gradient(0deg, var(--border-contrast-grey), var(--border-contrast-grey) 3.125%, transparent 3.125%, transparent)",
         backgroundSize: `100% calc(${fr.spacing("4w")} + 1px)`,
         gap: "1px 0",
-        '&:first-child': {
-          borderTop: 0
+        "> li": {
+            padding: 0,
         },
-        '&:last-child': {
-          borderBottom: 0
-        },
-        '> li': {
-          padding: 0,
-        }
+    },
+    first: {
+        borderTop: 0,
+    },
+    last: {
+        borderBottom: 0,
     },
 }));
 
