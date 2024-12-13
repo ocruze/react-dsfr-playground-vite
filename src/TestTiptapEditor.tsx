@@ -1,12 +1,4 @@
-// import Highlight from "@tiptap/extension-highlight";
-// import Image from "@tiptap/extension-image";
-// import Link from "@tiptap/extension-link";
-// import StarterKit from "@tiptap/starter-kit";
-// import Subscript from "@tiptap/extension-subscript";
-// import Superscript from "@tiptap/extension-superscript";
-// import TextAlign from "@tiptap/extension-text-align";
-// import Underline from "@tiptap/extension-underline";
-// import Youtube from "@tiptap/extension-youtube";
+import { useState } from "react";
 
 import RichTextEditor from "./components/RichTextEditor/RichTextEditor";
 
@@ -41,79 +33,15 @@ Wow, that’s amazing. Good work, boy! 👏
 </blockquote>
 `;
 
-// const extensions = [
-//     Highlight,
-//     Image.configure({
-//         inline: true,
-//     }),
-//     Link.configure({ openOnClick: false }),
-//     StarterKit,
-//     Subscript,
-//     Superscript,
-//     TextAlign.configure({
-//         types: ["heading", "paragraph"],
-//     }),
-//     Underline,
-//     Youtube.configure({
-//         controls: false,
-//         nocookie: true,
-//     }),
-// ];
-
 const TestTiptapEditor = () => {
+    const [content, setContent] = useState(initialContent);
+
     return (
         <>
-            <RichTextEditor content={initialContent} />
-            {/* <RichTextEditor.Provider content={initialContent} extensions={extensions}>
-                <RichTextEditor.Menu>
-                    <RichTextEditor.Bold />
-                    <RichTextEditor.Italic />
-                    <RichTextEditor.Underline />
-                    <RichTextEditor.Strike />
-                    <RichTextEditor.Subscript />
-                    <RichTextEditor.Superscript />
-                    <RichTextEditor.Code />
-                    <RichTextEditor.Highlight />
-                    <RichTextEditor.ClearFormatting />
-                    <RichTextEditor.Divider />
-                    <RichTextEditor.H1 />
-                    <RichTextEditor.H2 />
-                    <RichTextEditor.H3 />
-                    <RichTextEditor.H4 />
-                    <RichTextEditor.H5 />
-                    <RichTextEditor.H6 />
-                    <RichTextEditor.Paragraph />
-                    <RichTextEditor.Divider />
-                    <RichTextEditor.BulletList />
-                    <RichTextEditor.OrderedList />
-                    <RichTextEditor.CodeBlock />
-                    <RichTextEditor.Blockquote />
-                    <RichTextEditor.HorizontalRule />
-                    <RichTextEditor.Divider />
-                    <RichTextEditor.AlignLeft />
-                    <RichTextEditor.AlignCenter />
-                    <RichTextEditor.AlignRight />
-                    <RichTextEditor.AlignJustify />
-                    <RichTextEditor.Divider />
-                    <RichTextEditor.Link />
-                    <RichTextEditor.Unlink />
-                    <RichTextEditor.Divider />
-                    <RichTextEditor.Undo />
-                    <RichTextEditor.Redo />
-                    <RichTextEditor.Divider />
-                    <RichTextEditor.Image />
-                    <RichTextEditor.Youtube />
-                    <RichTextEditor.Divider />
-                </RichTextEditor.Menu>
-                <RichTextEditor.Content />
-            </RichTextEditor.Provider> */}
+            <RichTextEditor content={content} onContentUpdate={setContent} />
+            <div dangerouslySetInnerHTML={{ __html: content }}></div>
         </>
     );
 };
-
-// CodeBlockLowlight: https://tiptap.dev/docs/editor/extensions/nodes/code-block-lowlight
-// Mention: https://tiptap.dev/docs/editor/extensions/nodes/mention
-// Table: https://tiptap.dev/docs/editor/extensions/nodes/table
-// TaskList: https://tiptap.dev/docs/editor/extensions/nodes/task-list
 
 export default TestTiptapEditor;
