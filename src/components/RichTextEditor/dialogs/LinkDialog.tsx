@@ -63,11 +63,12 @@ function LinkDialog() {
         const { href, label } = getValues();
         const external = true;
 
+        editor.chain().focus().extendMarkRange("link").run();
+        const { from } = editor.state.selection;
         editor
             .chain()
-            .focus()
-            .extendMarkRange("link")
-            .insertContent(`<a href="${href}">${label}</a>`)
+            .insertContent(label)
+            .setTextSelection({ from, to: from + label.length })
             .setLink({ href, target: external ? "_blank" : null })
             .run();
 

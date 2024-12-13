@@ -4,6 +4,8 @@ import { useRoute } from "./router";
 import ExtentMap from "./ExtentMap";
 import TestTinyMCEditor from "./TestTinyMCEditor";
 import TestTiptapEditor from "./TestTiptapEditor";
+import TestTiptapMarkdown from "./TestTiptapMarkdown";
+import TestCustomTiptapEditor from "./TestCustomTiptapEditor";
 
 const RouterRenderer: FC = () => {
     const route = useRoute();
@@ -20,6 +22,12 @@ const RouterRenderer: FC = () => {
 
         case "test_tiptap_editor":
             return <TestTiptapEditor />;
+
+            case "test_tiptap_custom":
+                return <TestCustomTiptapEditor />;
+
+        case "test_tiptap_markdown":
+            return <TestTiptapMarkdown />;
 
         case "personal_data":
             return "Données personnelles";

@@ -51,6 +51,14 @@ function App() {
                         linkProps: routes.test_tiptap_editor().link,
                     },
                     {
+                        text: "Test Tiptap Custom",
+                        linkProps: routes.test_tiptap_custom().link,
+                    },
+                    {
+                        text: "Test Tiptap Markdown",
+                        linkProps: routes.test_tiptap_markdown().link,
+                    },
+                    {
                         text: "Données personnelles",
                         linkProps: routes.personal_data().link,
                     },

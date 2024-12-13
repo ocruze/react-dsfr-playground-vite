@@ -7,18 +7,11 @@ import { richTextEditorContext } from "./RichTextEditorContext";
 
 export interface IRichTextEditorProviderProps extends UseEditorOptions {
     children?: ReactNode;
-    onContentUpdate?: (content: string) => void;
 }
 
 function RichTextEditorProvider(props: IRichTextEditorProviderProps) {
-    const { children, onContentUpdate, onUpdate, ...rest } = props;
-    const editor = useEditor({
-        onUpdate: (props) => {
-            onUpdate?.(props);
-            onContentUpdate?.(props.editor.getHTML());
-        },
-        ...rest,
-    });
+    const { children, ...rest } = props;
+    const editor = useEditor(rest);
     const { classes } = useStyles();
 
     return (
