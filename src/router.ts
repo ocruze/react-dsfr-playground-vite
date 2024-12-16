@@ -1,9 +1,9 @@
 import { createRouter, defineRoute } from "type-route";
 
-const { BASE_URL } = import.meta.env;
+const BASE_URL = import.meta.env?.BASE_URL?.replace(/\/$/, "") ?? "/";
 
 export const { RouteProvider, useRoute, routes } = createRouter({
-    home: defineRoute(BASE_URL),
+    home: defineRoute(BASE_URL === "" ? "/" : BASE_URL),
     map: defineRoute(`${BASE_URL}/cartes`),
     test_tinymceditor: defineRoute(`${BASE_URL}/test-tinymceditor`),
     test_tiptap_editor: defineRoute(`${BASE_URL}/test-tiptap-editor`),
