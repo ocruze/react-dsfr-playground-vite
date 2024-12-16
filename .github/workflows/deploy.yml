@@ -38,7 +38,7 @@ jobs:
             - name: Build
               run: |
                   yarn prebuild
-                  yarn vite build --base=/react-dsfr-playground-vite/
+                  yarn vite build --base=/react-dsfr-playground-vite
 
             - name: Setup Pages
               uses: actions/configure-pages@v4
