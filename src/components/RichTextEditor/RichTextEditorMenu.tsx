@@ -29,6 +29,9 @@ const useStyles = tss.withName(RichTextEditorMenu.name).create(() => ({
         gap: "1px 0",
         "> li": {
             padding: 0,
+            display: "flex",
+            flexWrap: 'wrap',
+            gap: '1px 0',
         },
     },
     first: {
