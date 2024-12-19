@@ -31,14 +31,14 @@ export function createCustomControl(configuration: ICreateCustomControlProps) {
         });
 
         return (
-            <li>
+            <>
                 {Control(editor, editorState, ref)}
                 {DialogContent && (
                     <Dialog ref={ref}>
                         <DialogContent />
                     </Dialog>
                 )}
-            </li>
+            </>
         );
     };
 }

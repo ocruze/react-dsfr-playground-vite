@@ -11,7 +11,7 @@ import { useDialog } from "./components/RichTextEditor/dialogs/Dialog";
 import { useEffect } from "react";
 
 // 1. Create the component yourself: use the hook `useRichTextEditor` to access the editor object
-export function CustomControl() {
+export function CustomControl1() {
     const editor = useRichTextEditor();
     const editorState = useEditorState({
         editor,

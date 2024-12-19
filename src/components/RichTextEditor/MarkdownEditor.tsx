@@ -1,14 +1,15 @@
+import { ReactNode } from "react";
 import StarterKit from "@tiptap/starter-kit";
 import { Markdown } from "tiptap-markdown";
 
-import RichTextEditorProvider, { IRichTextEditorProviderProps } from "./RichTextEditorProvider";
-import RichTextEditorLoader from "./RichTextEditorLoader";
 import { MarkdownControl, markdownControls } from "./controls";
+import RichTextEditorProvider from "./RichTextEditorProvider";
+import RichTextEditorLoader, { IRichTextEditorLoaderProps } from "./RichTextEditorLoader";
 import RichTextEditorMenu from "./RichTextEditorMenu";
 import RichTextEditorContent from "./RichTextEditorContent";
-import { ReactNode } from "react";
+import RichTextEditorGroup from "./RichTextEditorGroup";
 
-export interface IMarkdownEditorProps extends Omit<IRichTextEditorProviderProps, "children"> {
+export interface IMarkdownEditorProps extends Omit<IRichTextEditorLoaderProps, "controls"> {
     controls?: MarkdownControl[][];
     onContentUpdate?: (content: string) => void;
 }
@@ -29,6 +30,7 @@ type MarkdownControls = {
 interface IMarkdownEditor extends MarkdownControls {
   (props: IMarkdownEditorProps): ReactNode
   Content: typeof RichTextEditorContent
+  Group: typeof RichTextEditorGroup
   Menu: typeof RichTextEditorMenu
   Provider: typeof RichTextEditorProvider
 };
@@ -63,6 +65,7 @@ Object.entries(markdownControls).forEach(([key, component]) => {
     MarkdownEditor[key as MarkdownControl] = component;
 });
 MarkdownEditor.Content = RichTextEditorContent;
+MarkdownEditor.Group = RichTextEditorGroup;
 MarkdownEditor.Menu = RichTextEditorMenu;
 MarkdownEditor.Provider = RichTextEditorProvider;
 

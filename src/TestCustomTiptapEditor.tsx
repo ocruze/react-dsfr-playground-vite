@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import RichTextEditor from "./components/RichTextEditor/RichTextEditor";
 import StarterKit from "@tiptap/starter-kit";
-import { CustomControl, CustomControl2, CustomControl3 } from "./TiptapCustomButton";
+import { CustomControl1, CustomControl2, CustomControl3 } from "./TiptapCustomButton";
 
 const TestCustomTiptapEditor = () => {
     const [content, setContent] = useState(`
@@ -15,10 +15,14 @@ this is a basic example of <strong>Tiptap</strong>. Sure, there are all kind of 
         <>
             <RichTextEditor.Provider content={content} extensions={[StarterKit]} onUpdate={({ editor }) => setContent(editor.getHTML())}>
                 <RichTextEditor.Menu first>
-                    <RichTextEditor.Bold />
-                    <CustomControl />
-                    <CustomControl2 />
-                    <CustomControl3 />
+                    <RichTextEditor.Group>
+                        <RichTextEditor.Bold />
+                    </RichTextEditor.Group>
+                    <RichTextEditor.Group>
+                        <CustomControl1 />
+                        <CustomControl2 />
+                        <CustomControl3 />
+                    </RichTextEditor.Group>
                 </RichTextEditor.Menu>
                 <RichTextEditor.Content />
             </RichTextEditor.Provider>

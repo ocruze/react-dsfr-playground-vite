@@ -38,15 +38,7 @@ export function useDialog(): Required<IDialogContext> {
     if (!modal) {
         throw new Error("Missing modal context");
     }
-    const context = useMemo(
-        () => ({
-            isOpened,
-            modal,
-            onClose,
-        }),
-        [isOpened, onClose, modal]
-    );
-    return context;
+    return { isOpened, onClose, modal };
 }
 
 const Dialog = forwardRef<IDialogHandle, IDialogProps>((props, ref) => {
@@ -72,17 +64,16 @@ const Dialog = forwardRef<IDialogHandle, IDialogProps>((props, ref) => {
 
     const isOpened = useIsModalOpen(modal);
 
-    return (
-        <dialogContext.Provider
-            value={{
-                isOpened,
-                modal,
-                onClose: close,
-            }}
-        >
-            {children}
-        </dialogContext.Provider>
+    const context = useMemo(
+        () => ({
+            isOpened,
+            modal,
+            onClose: close,
+        }),
+        [close, isOpened, modal]
     );
+
+    return <dialogContext.Provider value={context}>{children}</dialogContext.Provider>;
 });
 
 export default Dialog;
