@@ -1,13 +1,14 @@
+import { ReactNode } from "react";
 import StarterKit from "@tiptap/starter-kit";
 
-import RichTextEditorProvider, { IRichTextEditorProviderProps } from "./RichTextEditorProvider";
-import RichTextEditorLoader from "./RichTextEditorLoader";
 import { Control, richTextEditorControls } from "./controls";
+import RichTextEditorProvider from "./RichTextEditorProvider";
+import RichTextEditorLoader, { IRichTextEditorLoaderProps } from "./RichTextEditorLoader";
 import RichTextEditorContent from "./RichTextEditorContent";
 import RichTextEditorMenu from "./RichTextEditorMenu";
-import { ReactNode } from "react";
-export interface IRichTextEditorProps extends Omit<IRichTextEditorProviderProps, "children"> {
-    controls?: Control[][];
+import RichTextEditorGroup from "./RichTextEditorGroup";
+export interface IRichTextEditorProps extends Omit<IRichTextEditorLoaderProps, "controls"> {
+    controls?: (Control | (() => ReactNode))[][];
     onContentUpdate?: (content: string) => void;
 }
 
@@ -28,6 +29,7 @@ type RichTextEditorControls = {
 interface IRichTextEditor extends RichTextEditorControls {
   (props: IRichTextEditorProps): ReactNode
   Content: typeof RichTextEditorContent
+  Group: typeof RichTextEditorGroup
   Menu: typeof RichTextEditorMenu
   Provider: typeof RichTextEditorProvider
 };
@@ -46,6 +48,7 @@ Object.entries(richTextEditorControls).forEach(([key, component]) => {
     RichTextEditor[key as Control] = component;
 });
 RichTextEditor.Content = RichTextEditorContent;
+RichTextEditor.Group = RichTextEditorGroup;
 RichTextEditor.Menu = RichTextEditorMenu;
 RichTextEditor.Provider = RichTextEditorProvider;
 

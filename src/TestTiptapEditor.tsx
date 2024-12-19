@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import RichTextEditor from "./components/RichTextEditor/RichTextEditor";
+import { CustomControl1, CustomControl2, CustomControl3 } from "./TiptapCustomButton";
 
 const initialContent = `
 <h2>
@@ -38,7 +39,20 @@ const TestTiptapEditor = () => {
 
     return (
         <>
-            <RichTextEditor content={content} onContentUpdate={setContent} />
+            <RichTextEditor
+                content={content}
+                controls={[
+                    ["Bold", "Italic", "Underline", "Strike", "Subscript", "Superscript", "Code", "Highlight", "Color", "ClearFormatting"],
+                    ["H1", "H2", "H3", "H4", "H5", "H6", "Paragraph"],
+                    ["BulletList", "OrderedList", "CodeBlock", "Blockquote", "HorizontalRule"],
+                    ["AlignLeft", "AlignCenter", "AlignRight", "AlignJustify"],
+                    ["Link", "Unlink"],
+                    ["Undo", "Redo"],
+                    ["Image", "Youtube"],
+                    [CustomControl1, CustomControl2, CustomControl3]
+                ]}
+                onContentUpdate={setContent}
+            />
             <div dangerouslySetInnerHTML={{ __html: content }}></div>
         </>
     );

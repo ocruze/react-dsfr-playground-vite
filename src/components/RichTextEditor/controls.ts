@@ -33,14 +33,12 @@ import {
     RichTextEditorUnlink,
     RichTextEditorYoutube,
 } from "./RichTextEditorControls";
-import RichTextEditorDivider from "./RichTextEditorDivider";
 
 export type MarkdownControl =
     | "Bold"
     | "Italic"
     | "Code"
     | "ClearFormatting"
-    | "Divider"
     | "H1"
     | "H2"
     | "H3"
@@ -80,7 +78,6 @@ export const markdownControls: Record<MarkdownControl, () => ReactNode> = {
     ClearFormatting: RichTextEditorClearFormatting,
     Code: RichTextEditorCode,
     CodeBlock: RichTextEditorCodeBlock,
-    Divider: RichTextEditorDivider,
     H1: RichTextEditorH1,
     H2: RichTextEditorH2,
     H3: RichTextEditorH3,

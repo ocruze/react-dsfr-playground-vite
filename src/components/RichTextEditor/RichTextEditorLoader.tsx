@@ -1,4 +1,3 @@
-import { Fragment } from "react/jsx-runtime";
 import { ReactNode, useEffect, useMemo, useState } from "react";
 import { AnyExtension } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -6,8 +5,8 @@ import StarterKit from "@tiptap/starter-kit";
 import RichTextEditorContent from "./RichTextEditorContent";
 import RichTextEditorMenu from "./RichTextEditorMenu";
 import RichTextEditorProvider, { IRichTextEditorProviderProps } from "./RichTextEditorProvider";
-import RichTextEditorDivider from "./RichTextEditorDivider";
 import { Control, richTextEditorControls } from "./controls";
+import RichTextEditorGroup from "./RichTextEditorGroup";
 
 export type Extension =
     | "color"
@@ -22,8 +21,9 @@ export type Extension =
     | "underline"
     | "youtube";
 
-export interface IRichTextEditorProps extends Omit<IRichTextEditorProviderProps, "children"> {
-    controls: Control[][];
+export interface IRichTextEditorLoaderProps extends Omit<IRichTextEditorProviderProps, "children"> {
+    controls: (Control | (() => ReactNode))[][];
+    menu?: 'top' | 'bottom'
 }
 
 const extensionLoader: Partial<Record<Extension, () => Promise<AnyExtension | AnyExtension[]>>> = {
@@ -91,8 +91,8 @@ const extensionDefaultConfiguration = {
     },
 };
 
-function RichTextEditorLoader(props: IRichTextEditorProps) {
-    const { controls } = props;
+function RichTextEditorLoader(props: IRichTextEditorLoaderProps) {
+    const { controls, menu = 'top' } = props;
     const [extensions, setExtensions] = useState<Partial<Record<Extension, AnyExtension>>>(() =>
         Object.fromEntries(props.extensions?.map((extension) => [extension.name, extension]) ?? [["starterKit", StarterKit]])
     );
@@ -101,6 +101,7 @@ function RichTextEditorLoader(props: IRichTextEditorProps) {
             ...new Set(
                 controls
                     .flat()
+                    .filter((feature) => typeof feature === "string")
                     .map((feature) => extensionMapping[feature])
                     .filter((name) => extensionLoader[name])
             ),
@@ -137,21 +138,21 @@ function RichTextEditorLoader(props: IRichTextEditorProps) {
 
     return (
         <RichTextEditorProvider {...props} extensions={Object.values(extensions)}>
-            <RichTextEditorMenu first>
+            {menu === 'bottom' && <RichTextEditorContent />}
+            <RichTextEditorMenu first={menu === 'top'} last={menu === 'bottom'}>
                 {controls
-                    .map((list) => list.filter((item) => richTextEditorControls[item]))
+                    .map((list) => list.filter((item) => typeof item !== "string" || richTextEditorControls[item]))
                     .filter((list) => list.length > 0)
                     .map((list, i) => (
-                        <Fragment key={i}>
+                        <RichTextEditorGroup key={i}>
                             {list.map((item, j) => {
-                                const Component = richTextEditorControls[item] as () => ReactNode;
+                                const Component = typeof item !== "string" ? item : (richTextEditorControls[item] as () => ReactNode);
                                 return <Component key={j} />;
                             })}
-                            <RichTextEditorDivider />
-                        </Fragment>
+                        </RichTextEditorGroup>
                     ))}
             </RichTextEditorMenu>
-            <RichTextEditorContent />
+            {menu === 'top' && <RichTextEditorContent />}
         </RichTextEditorProvider>
     );
 }
