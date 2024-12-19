@@ -7,7 +7,7 @@ import { useRichTextEditor } from "./RichTextEditorContext";
 function RichTextEditorContent() {
     const editor = useRichTextEditor();
     const { classes } = useStyles();
-
+    
     return <EditorContent className={classes.root} editor={editor} />;
 }
 

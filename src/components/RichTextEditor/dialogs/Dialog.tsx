@@ -33,8 +33,20 @@ interface IDialogContext {
 
 const dialogContext = createContext<IDialogContext>({ isOpened: false, onClose: () => null });
 
-export function useDialog() {
-    return useContext(dialogContext);
+export function useDialog(): Required<IDialogContext> {
+    const { isOpened, onClose, modal } = useContext(dialogContext);
+    if (!modal) {
+        throw new Error("Missing modal context");
+    }
+    const context = useMemo(
+        () => ({
+            isOpened,
+            modal,
+            onClose,
+        }),
+        [isOpened, onClose, modal]
+    );
+    return context;
 }
 
 const Dialog = forwardRef<IDialogHandle, IDialogProps>((props, ref) => {
@@ -60,16 +72,17 @@ const Dialog = forwardRef<IDialogHandle, IDialogProps>((props, ref) => {
 
     const isOpened = useIsModalOpen(modal);
 
-    const context = useMemo(
-        () => ({
-            isOpened,
-            modal,
-            onClose: close,
-        }),
-        [close, isOpened, modal]
+    return (
+        <dialogContext.Provider
+            value={{
+                isOpened,
+                modal,
+                onClose: close,
+            }}
+        >
+            {children}
+        </dialogContext.Provider>
     );
-
-    return <dialogContext.Provider value={context}>{children}</dialogContext.Provider>;
 });
 
 export default Dialog;
