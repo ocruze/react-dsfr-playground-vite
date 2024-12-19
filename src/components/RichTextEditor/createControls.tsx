@@ -1,5 +1,4 @@
-import Button from "@codegouvfr/react-dsfr/Button";
-import { FrIconClassName, RiIconClassName } from "@codegouvfr/react-dsfr";
+import Button, { ButtonProps } from "@codegouvfr/react-dsfr/Button";
 
 import { useRichTextEditor } from "./RichTextEditorContext";
 import { Editor, useEditorState } from "@tiptap/react";
@@ -22,10 +21,6 @@ export function createCustomControl(configuration: ICreateCustomControlProps) {
     const { Control, DialogContent, isActive, isDisabled } = configuration;
     return function RichTextEditorBold(): ReactNode {
         const editor = useRichTextEditor();
-        if (!editor) {
-            throw new Error("Missing editor context");
-        }
-
         const ref = useRef<IDialogHandle>(null);
         const editorState = useEditorState({
             editor,
@@ -48,36 +43,36 @@ export function createCustomControl(configuration: ICreateCustomControlProps) {
     };
 }
 
-interface ICreateButtonControlProps extends Omit<ICreateCustomControlProps, "Control"> {
-    iconId: FrIconClassName | RiIconClassName;
-    label: string;
+interface ICreateDialogControlProps extends Omit<ICreateCustomControlProps, "Control"> {
+    buttonProps: ButtonProps;
     onClick: (editor: Editor, ref: MutableRefObject<IDialogHandle | null>) => void;
 }
 
-export function createButtonControl(configuration: ICreateButtonControlProps) {
-    const { iconId, label, onClick, ...rest } = configuration;
+export function createDialogControl(configuration: ICreateDialogControlProps) {
+    const { buttonProps, onClick, ...rest } = configuration;
     return createCustomControl({
-        Control: (editor, editorState, ref) => (
-            <Button
-                disabled={editorState.disabled}
-                iconId={iconId}
-                onClick={() => onClick(editor, ref)}
-                priority={editorState.isActive ? "primary" : "tertiary no outline"}
-                size="small"
-                title={label}
-            />
-        ),
+        Control: (editor, editorState, ref) => {
+            const props = {
+                disabled: editorState.disabled,
+                onClick: () => onClick(editor, ref),
+                priority: editorState.isActive ? "primary" : "tertiary no outline",
+                size: "small",
+                type: "button",
+                ...buttonProps,
+            } as ButtonProps;
+            return <Button {...props} />;
+        },
         ...rest,
     });
 }
 
-interface ICreateControlProps extends Omit<ICreateButtonControlProps, "Dialog" | "onClick"> {
+interface ICreateControlProps extends Omit<ICreateDialogControlProps, "Dialog" | "onClick"> {
     operation: { name: string; attributes?: Record<string, unknown> | string };
 }
 
 export function createControl(configuration: ICreateControlProps) {
     const { isDisabled, operation, ...rest } = configuration;
-    return createButtonControl({
+    return createDialogControl({
         ...rest,
         isDisabled: isDisabled ?? ((editor) => !editor?.can().chain().focus()[operation.name](operation.attributes).run()),
         onClick: (editor) => editor?.chain().focus()[operation.name](operation.attributes).run(),

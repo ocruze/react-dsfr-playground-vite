@@ -2,215 +2,184 @@ import ImageDialog from "./dialogs/ImageDialog";
 import LinkDialog from "./dialogs/LinkDialog";
 import YoutubeDialog from "./dialogs/YoutubeDialog";
 
-import { createControl, createButtonControl, createCustomControl } from "./createControls";
+import { createControl, createCustomControl, createDialogControl } from "./createControls";
 import ColorInput from "./ColorInput";
 
 export const RichTextEditorBold = createControl({
-    iconId: "ri-bold",
+    buttonProps: { iconId: "ri-bold", title: "Gras" },
     isActive: { name: "bold" },
-    label: "Gras",
     operation: { name: "toggleBold" },
 });
 
 export const RichTextEditorItalic = createControl({
-    iconId: "ri-italic",
+    buttonProps: { iconId: "ri-italic", title: "Italique" },
     isActive: { name: "italic" },
-    label: "Italique",
     operation: { name: "toggleItalic" },
 });
 
 export const RichTextEditorUnderline = createControl({
-    iconId: "ri-underline",
+    buttonProps: { iconId: "ri-underline", title: "Souligné" },
     isActive: { name: "underline" },
-    label: "Souligné",
     operation: { name: "toggleUnderline" },
 });
 
 export const RichTextEditorStrike = createControl({
-    iconId: "ri-strikethrough",
+    buttonProps: { iconId: "ri-strikethrough", title: "Barré" },
     isActive: { name: "strike" },
-    label: "Barré",
     operation: { name: "toggleStrike" },
 });
 
 export const RichTextEditorCode = createControl({
-    iconId: "ri-code-s-slash-line",
+    buttonProps: { iconId: "ri-code-s-slash-line", title: "Code" },
     isActive: { name: "code" },
-    label: "Code",
     operation: { name: "toggleCode" },
 });
 
 export const RichTextEditorParagraph = createControl({
-    iconId: "ri-paragraph",
+    buttonProps: { iconId: "ri-paragraph", title: "Paragraphe" },
     isActive: { name: "paragraph" },
-    label: "Paragraphe",
     operation: { name: "setParagraph" },
 });
 
 export const RichTextEditorBulletList = createControl({
-    iconId: "ri-list-unordered",
+    buttonProps: { iconId: "ri-list-unordered", title: "Liste à puces" },
     isActive: { name: "bulletList" },
-    label: "Liste à puces",
     operation: { name: "toggleBulletList" },
 });
 
 export const RichTextEditorOrderedList = createControl({
-    iconId: "ri-list-ordered",
+    buttonProps: { iconId: "ri-list-ordered", title: "Liste ordonnée" },
     isActive: { name: "orderedList" },
-    label: "Liste ordonnée",
     operation: { name: "toggleOrderedList" },
 });
 
 export const RichTextEditorCodeBlock = createControl({
-    iconId: "ri-code-block",
+    buttonProps: { iconId: "ri-code-block", title: "Bloc de code" },
     isActive: { name: "codeBlock" },
-    label: "Bloc de code",
     operation: { name: "toggleCodeBlock" },
 });
 
 export const RichTextEditorBlockquote = createControl({
-    iconId: "ri-double-quotes-l",
+    buttonProps: { iconId: "ri-double-quotes-l", title: "Citation" },
     isActive: { name: "blockquote" },
-    label: "Citation",
     operation: { name: "toggleBlockquote" },
 });
 
 export const RichTextEditorUndo = createControl({
-    iconId: "ri-arrow-go-back-line",
+    buttonProps: { iconId: "ri-arrow-go-back-line", title: "Défaire" },
     isDisabled: (editor) => !editor?.can().undo(),
-    label: "Défaire",
     operation: { name: "undo" },
 });
 
 export const RichTextEditorRedo = createControl({
-    iconId: "ri-arrow-go-forward-line",
+    buttonProps: { iconId: "ri-arrow-go-forward-line", title: "Refaire" },
     isDisabled: (editor) => !editor?.can().redo(),
-    label: "Refaire",
     operation: { name: "redo" },
 });
 
 export const RichTextEditorH1 = createControl({
-    iconId: "fr-icon-h-1", // ri-h-1
+    buttonProps: { iconId: "fr-icon-h-1", title: "Titre 1" },
     isActive: { name: "heading", attributes: { level: 1 } },
-    label: "Titre 1",
     operation: { name: "toggleHeading", attributes: { level: 1 } },
 });
 
 export const RichTextEditorH2 = createControl({
-    iconId: "fr-icon-h-2",
+    buttonProps: { iconId: "fr-icon-h-2", title: "Titre 2" },
     isActive: { name: "heading", attributes: { level: 2 } },
-    label: "Titre 2",
     operation: { name: "toggleHeading", attributes: { level: 2 } },
 });
 
 export const RichTextEditorH3 = createControl({
-    iconId: "fr-icon-h-3",
+    buttonProps: { iconId: "fr-icon-h-3", title: "Titre 3" },
     isActive: { name: "heading", attributes: { level: 3 } },
-    label: "Titre 3",
     operation: { name: "toggleHeading", attributes: { level: 3 } },
 });
 
 export const RichTextEditorH4 = createControl({
-    iconId: "fr-icon-h-4",
+    buttonProps: { iconId: "fr-icon-h-4", title: "Titre 4" },
     isActive: { name: "heading", attributes: { level: 4 } },
-    label: "Titre 4",
     operation: { name: "toggleHeading", attributes: { level: 4 } },
 });
 
 export const RichTextEditorH5 = createControl({
-    iconId: "fr-icon-h-5",
+    buttonProps: { iconId: "fr-icon-h-5", title: "Titre 5" },
     isActive: { name: "heading", attributes: { level: 5 } },
-    label: "Titre 5",
     operation: { name: "toggleHeading", attributes: { level: 5 } },
 });
 
 export const RichTextEditorH6 = createControl({
-    iconId: "fr-icon-h-6",
+    buttonProps: { iconId: "fr-icon-h-6", title: "Titre 6" },
     isActive: { name: "heading", attributes: { level: 6 } },
-    label: "Titre 6",
     operation: { name: "toggleHeading", attributes: { level: 6 } },
 });
 
 export const RichTextEditorHorizontalRule = createControl({
-    iconId: "ri-separator",
-    label: "Ligne horizontale",
+    buttonProps: { iconId: "ri-separator", title: "Ligne horizontale" },
     operation: { name: "setHorizontalRule" },
 });
 
 export const RichTextEditorClearFormatting = createControl({
-    iconId: "ri-format-clear",
-    label: "Supprimer le formatage",
+    buttonProps: { iconId: "ri-format-clear", title: "Supprimer le formatage" },
     operation: { name: "unsetAllMarks" },
 });
 
 export const RichTextEditorHighlight = createControl({
-    iconId: "fr-icon-mark-pen-line",
+    buttonProps: { iconId: "fr-icon-mark-pen-line", title: "Surligner" },
     isActive: { name: "highlight" },
-    label: "Surligner",
     operation: { name: "toggleHighlight" },
 });
 export const RichTextEditorSubscript = createControl({
-    iconId: "ri-subscript",
+    buttonProps: { iconId: "ri-subscript", title: "Indice" },
     isActive: { name: "subscript" },
-    label: "Indice",
     operation: { name: "toggleSubscript" },
 });
 
 export const RichTextEditorSuperscript = createControl({
-    iconId: "ri-superscript",
+    buttonProps: { iconId: "ri-superscript", title: "Exposant" },
     isActive: { name: "superscript" },
-    label: "Exposant",
     operation: { name: "toggleSuperscript" },
 });
 
 export const RichTextEditorAlignLeft = createControl({
-    iconId: "ri-align-left",
-    label: "Aligner à gauche",
+    buttonProps: { iconId: "ri-align-left", title: "Aligner à gauche" },
     operation: { name: "setTextAlign", attributes: "left" },
 });
 
 export const RichTextEditorAlignCenter = createControl({
-    iconId: "ri-align-center",
-    label: "Centrer",
+    buttonProps: { iconId: "ri-align-center", title: "Centrer" },
     operation: { name: "setTextAlign", attributes: "center" },
 });
 
 export const RichTextEditorAlignRight = createControl({
-    iconId: "ri-align-right",
-    label: "Aligner à droite",
+    buttonProps: { iconId: "ri-align-right", title: "Aligner à droite" },
     operation: { name: "setTextAlign", attributes: "right" },
 });
 
 export const RichTextEditorAlignJustify = createControl({
-    iconId: "ri-align-justify",
-    label: "Justifier",
+    buttonProps: { iconId: "ri-align-justify", title: "Justifier" },
     operation: { name: "setTextAlign", attributes: "justify" },
 });
 
 export const RichTextEditorUnlink = createControl({
-    iconId: "ri-link-unlink",
-    label: "Supprimer le lien",
+    buttonProps: { iconId: "ri-link-unlink", title: "Supprimer le lien" },
     operation: { name: "unsetLink" },
 });
 
-export const RichTextEditorLink = createButtonControl({
+export const RichTextEditorLink = createDialogControl({
+    buttonProps: { iconId: "ri-link", title: "Ajouter un lien" },
     DialogContent: LinkDialog,
-    iconId: "ri-link",
-    label: "Ajouter un lien",
     onClick: (editor, ref) => ref.current?.open(),
 });
 
-export const RichTextEditorImage = createButtonControl({
+export const RichTextEditorImage = createDialogControl({
+    buttonProps: { iconId: "ri-image-line", title: "Insérer une image" },
     DialogContent: ImageDialog,
-    iconId: "ri-image-line",
-    label: "Insérer une image",
     onClick: (editor, ref) => ref.current?.open(),
 });
 
-export const RichTextEditorYoutube = createButtonControl({
+export const RichTextEditorYoutube = createDialogControl({
+    buttonProps: { iconId: "ri-video-line", title: "Insérer une vidéo" },
     DialogContent: YoutubeDialog,
-    iconId: "ri-video-line",
-    label: "Insérer une vidéo",
     onClick: (editor, ref) => ref.current?.open(),
 });
 

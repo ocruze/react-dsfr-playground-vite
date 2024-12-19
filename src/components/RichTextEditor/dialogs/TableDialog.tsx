@@ -19,13 +19,6 @@ function TableDialog() {
     const { isOpened, modal, onClose } = useDialog();
     const editor = useRichTextEditor();
 
-    if (!modal) {
-        throw new Error("Missing modal context");
-    }
-    if (!editor) {
-        throw new Error("Missing editor context");
-    }
-
     const schema = yup.object({
         rows: yup.number().required(),
         cols: yup.number().required(),
