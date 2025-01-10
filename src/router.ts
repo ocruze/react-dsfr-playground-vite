@@ -10,4 +10,5 @@ export const { RouteProvider, useRoute, routes } = createRouter({
     personal_data: defineRoute(`${BASE_URL}/donnees-personnelles`),
     test_tiptap_custom: defineRoute(`${BASE_URL}/test-tiptap-custom`),
     test_tiptap_markdown: defineRoute(`${BASE_URL}/test-tiptap-markdown`),
+    test_tiptap_library: defineRoute(`${BASE_URL}/test-tiptap-library`),
 });

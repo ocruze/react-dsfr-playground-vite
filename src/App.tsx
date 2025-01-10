@@ -59,6 +59,10 @@ function App() {
                         linkProps: routes.test_tiptap_markdown().link,
                     },
                     {
+                        text: "Test @ignf/react-dsfr-tiptap",
+                        linkProps: routes.test_tiptap_library().link,
+                    },
+                    {
                         text: "Données personnelles",
                         linkProps: routes.personal_data().link,
                     },

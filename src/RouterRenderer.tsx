@@ -6,6 +6,7 @@ import TestTinyMCEditor from "./TestTinyMCEditor";
 import TestTiptapEditor from "./TestTiptapEditor";
 import TestTiptapMarkdown from "./TestTiptapMarkdown";
 import TestCustomTiptapEditor from "./TestCustomTiptapEditor";
+import TestTiptapLibrary from "./TestTiptapLibrary";
 
 const RouterRenderer: FC = () => {
     const route = useRoute();
@@ -23,11 +24,14 @@ const RouterRenderer: FC = () => {
         case "test_tiptap_editor":
             return <TestTiptapEditor />;
 
-            case "test_tiptap_custom":
-                return <TestCustomTiptapEditor />;
+        case "test_tiptap_custom":
+            return <TestCustomTiptapEditor />;
 
         case "test_tiptap_markdown":
             return <TestTiptapMarkdown />;
+
+        case "test_tiptap_library":
+            return <TestTiptapLibrary />;
 
         case "personal_data":
             return "Données personnelles";
